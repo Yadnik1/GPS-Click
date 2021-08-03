@@ -1,15 +1,17 @@
-from machine import Pin, UART, I2C
+from machine import Pin, UART
 
 
 #Import utime library to implement delay
 import utime, time
 
+#Oled I2C connection
 
 
 #GPS Module UART Connection
 gps_module = UART("UART_0")
 
-
+#print gps module connection details
+print(gps_module)
 
 #Used to Store NMEA Sentences
 buff = bytearray(255)
@@ -84,8 +86,22 @@ def convertToDigree(RawDegrees):
     Converted = '{0:.6f}'.format(Converted) # to 6 decimal places
     return str(Converted)
     
-if(FIX_STATUS == True):
-    print(latitude)
-    print(longitude)
-    print(satellites)
-    print(gpsTime)
+    
+while True:
+    
+    getPositionData(gps_module)
+
+    #if gps data is found then print NMEA data
+    if(FIX_STATUS == True):
+        print("fix......")
+        print(latitude)
+        print(longitude)
+        print(satellites)
+        print(gpsTime)
+        
+        FIX_STATUS = False
+        
+    if(TIMEOUT == True):
+        print("Request Timeout: No GPS data is found.")
+        TIMEOUT = False
+        
