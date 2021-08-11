@@ -4,11 +4,9 @@ from machine import Pin, UART
 #Import utime library to implement delay
 import utime, time
 
-#Oled I2C connection
-
 
 #GPS Module UART Connection
-gps_module = UART("UART_0")
+gps_module = UART("UART_1")
 
 #print gps module connection details
 print(gps_module)
